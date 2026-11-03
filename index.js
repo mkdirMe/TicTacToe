@@ -1,29 +1,30 @@
 const move = document.querySelectorAll(".box");
 const erase = document.querySelector(".reset");
 
-//036, 012, 048
-
+//Rows: 012, 345, 678    (+1)
+//Columns: 036, 147, 258 (+3)
+//Diagonals: 048, 246    (+4)
 
 
 let board = [];
 move.forEach((singleBox, index) => {
 
-    board[index] = 0;
+    board[index] = null;
 
 });
 
 const turn = ['X','O'];
-let i = 0;
+let player = 0;
 move.forEach((singleBox, index) => {
 
 
     singleBox.addEventListener("click", () => {
 
-        if (board[index] !== 0) return;
+        if (board[index] !== null) return;
 
-        singleBox.textContent = `${turn[i]}`;
-        board[index] = i;
-        i = (i + 1) % 2
+        singleBox.textContent = `${turn[player]}`;
+        board[index] = player;
+        player = (player + 1) % 2
 
         let win = false;
         for (let i = 3; i <= 6; i += 3)
@@ -35,28 +36,38 @@ move.forEach((singleBox, index) => {
                     break;
                 }
 
-                else (i === 6)
+                else if (i === 6)
                 {
                     win = true;
                 }
             }
-            
-
-
         }
+
 
         if (win === true)
         {
-            alert("THERE IS A WINNER!!!");
-            win = false;
-            clearboard();
+            setTimeout(() => {
+                alert("THERE IS A WINNER!!!")
+                win = false;
+                clearboard();
+            }, 500);
         } 
+
+        if (!board.includes(null))
+        {
+            setTimeout(() => {
+                alert("*lights cigar*\nThere are no winners in this game...\nYou know what that means")
+                clearboard();
+            }, 1000);
+
+        }
         
-
-
-
     });
+
+
 });
+
+
 
 erase.addEventListener("click", () => {
     clearboard();
