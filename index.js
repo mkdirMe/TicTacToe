@@ -89,9 +89,6 @@ singleBox.addEventListener("click", () => {
 });
 
 
-
-
-
 erase.addEventListener("click", () => {
     clearTimeout(boardtime);
     clearboard();
